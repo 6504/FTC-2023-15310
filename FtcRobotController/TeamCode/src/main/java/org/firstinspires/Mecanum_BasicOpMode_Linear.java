@@ -31,6 +31,9 @@ package org.firstinspires.ftc.robotcontroller.external.samples;
 
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+
+import java.rmi.server.ServerNotActiveException;
+
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -66,6 +69,13 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
     public static final double NEW_D = 0.2;
     public static final double NEW_F = 0.5;
 
+    private DcMotor lift = null;
+    private Servo claw = null;
+
+    private final int LIFT_LOW = 0; //TODO: find actual values
+    private final int LIFT_MEDIUM = 1000; //TODO: find actual values
+    private final int LIFT_HIGH = 2000; //TODO: find actual values
+
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -79,6 +89,9 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
 
+        lift = hardwareMap.get(DcMotor.class, "lift"); //TODO: set this up on phone
+        claw = hardwareMap.get(Servo.class, "claw"); //TODO: set this up on phone
+
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
@@ -88,6 +101,9 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
         backLeft.setDirection(DcMotorEx.Direction.REVERSE);
         frontRight.setDirection(DcMotorEx.Direction.FORWARD);
         backRight.setDirection(DcMotorEx.Direction.FORWARD);
+
+        lift.setDirection(DcMotor.Direction.FORWARD);
+        claw.setDirection(Servo.Direction.FORWARD);
 
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
@@ -100,6 +116,7 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
+            // Driving variables for mecanum drive
             double y = -gamepad1.left_stick_y;
             double x = gamepad1.left_stick_x * 1.1; // Counteract imperfect strafing
             double rx = gamepad1.right_stick_x;
@@ -117,6 +134,77 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
             backLeft.setPower(backLeftPower);
             frontRight.setPower(frontRightPower);
             backRight.setPower(backRightPower);
+
+            // variables for automatic lift control
+            boolean buttonX = gamepad1.x; // button to cancel automatic lift movement
+            boolean buttonA; // button to move lift to low position
+            boolean buttonB; // button to move lift to medium position
+            boolean buttonY; // button to move lift to high position
+
+            if (gamepad1.a && !(buttonB || buttonX || buttonY)) {
+                buttonA = true;
+            } else if (gamepad1.b && !(buttonA || buttonX || buttonY)) {
+                buttonB = true;
+            } else if (gamepad1.y && !(buttonA || buttonB || buttonX)) {
+                buttonY = true;
+            }
+
+            // logic for automatic lift control
+            if (buttonX) {
+                buttonA = false;
+                buttonB = false;
+                buttonY = false;
+            } else if (buttonA) {
+                lift.setTargetPosition(LIFT_LOW);
+                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                lift.setPower(0.5);
+                if (Math.abs(lift.getCurrentPosition()-LIFT_LOW) < 10) {
+                    buttonA = false;
+                }
+            } else if (buttonB) {
+                lift.setTargetPosition(LIFT_MEDIUM);
+                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                lift.setPower(0.5);
+                if (Math.abs(lift.getCurrentPosition()-LIFT_MEDIUM) < 10) {
+                    buttonB = false;
+                }
+            } else if (buttonY) {
+                lift.setTargetPosition(LIFT_HIGH);
+                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                lift.setPower(0.5);
+                if (Math.abs(lift.getCurrentPosition()-LIFT_HIGH) < 10) {
+                    buttonY = false;
+                }
+            } else {
+                lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                lift.setPower(0);
+            }
+
+            // variables for manual lift control
+            double triggerLeft = gamepad1.left_trigger;
+            double triggerRight = gamepad1.right_trigger;
+
+            // Logic for manual lift controls (left trigger lowers, right trigger raises)
+            if (triggerLeft > 0.05) {
+                lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                lift.setPower(-triggerLeft);
+            } else if (triggerRight > 0.05) {
+                lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                lift.setPower(triggerRight);
+            } else if (lift.getMode() == DcMotor.RunMode.RUN_WITHOUT_ENCODER) {
+                lift.setPower(0);
+            }
+
+            // variables for claw control
+            boolean bumperLeft = gamepad1.left_bumper;
+            boolean bumperRight = gamepad1.right_bumper;
+
+            // Logic for claw controls (A opens, B closes)
+            if (bumperLeft) {
+                claw.setPosition(0); //TODO: find actual values
+            } else if (bumperRight) {
+                claw.setPosition(1); //TODO: find actual values
+            }
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
