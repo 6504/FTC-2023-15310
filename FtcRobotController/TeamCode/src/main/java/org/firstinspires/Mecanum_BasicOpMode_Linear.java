@@ -186,9 +186,15 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
 
             // Logic for manual lift controls (left trigger lowers, right trigger raises)
             if (triggerLeft > 0.05) {
+                buttonA = false;
+                buttonB = false;
+                buttonY = false;
                 lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 lift.setPower(-triggerLeft);
             } else if (triggerRight > 0.05) {
+                buttonA = false;
+                buttonB = false;
+                buttonY = false;
                 lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
                 lift.setPower(triggerRight);
             } else if (lift.getMode() == DcMotor.RunMode.RUN_WITHOUT_ENCODER) {
