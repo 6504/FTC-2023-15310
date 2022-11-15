@@ -32,10 +32,11 @@ package org.firstinspires.ftc.robotcontroller.external.samples;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
-import java.rmi.server.ServerNotActiveException;
+//import java.rmi.server.ServerNotActiveException;
 
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.hardware.DcMotorEx;
+import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Range;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
@@ -69,7 +70,7 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
     public static final double NEW_D = 0.2;
     public static final double NEW_F = 0.5;
 
-    private DcMotor lift = null;
+    private DcMotorEx lift = null;
     private Servo claw = null;
 
     private final int LIFT_LOW = 0; //TODO: find actual values
@@ -89,7 +90,7 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
 
-        lift = hardwareMap.get(DcMotor.class, "lift"); //TODO: set this up on phone
+        lift = hardwareMap.get(DcMotorEx.class, "lift"); //TODO: set this up on phone
         claw = hardwareMap.get(Servo.class, "claw"); //TODO: set this up on phone
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
@@ -102,7 +103,7 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
         frontRight.setDirection(DcMotorEx.Direction.FORWARD);
         backRight.setDirection(DcMotorEx.Direction.FORWARD);
 
-        lift.setDirection(DcMotor.Direction.FORWARD);
+        lift.setDirection(DcMotorEx.Direction.FORWARD);
         claw.setDirection(Servo.Direction.FORWARD);
 
         // Wait for the game to start (driver presses PLAY)
@@ -113,9 +114,9 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
         PIDFCoefficients pidfCoA=new PIDFCoefficients(NEW_P, NEW_I, NEW_D, NEW_F);
         //motorControllerEx.setPIDFCoefficients(motorIndex, DcMotorEX.RunMode.RUN_USING_ENCODER, PIDFCoA);
         
-        boolean buttonA; // button to move lift to low position
-        boolean buttonB; // button to move lift to medium position
-        boolean buttonY; // button to move lift to high position
+        boolean buttonA = false; // button to move lift to low position
+        boolean buttonB = false; // button to move lift to medium position
+        boolean buttonY = false; // button to move lift to high position
 
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
@@ -158,27 +159,27 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
                 buttonY = false;
             } else if (buttonA) {
                 lift.setTargetPosition(LIFT_LOW);
-                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                lift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
                 lift.setPower(0.5);
                 if (Math.abs(lift.getCurrentPosition()-LIFT_LOW) < 10) {
                     buttonA = false;
                 }
             } else if (buttonB) {
                 lift.setTargetPosition(LIFT_MEDIUM);
-                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                lift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
                 lift.setPower(0.5);
                 if (Math.abs(lift.getCurrentPosition()-LIFT_MEDIUM) < 10) {
                     buttonB = false;
                 }
             } else if (buttonY) {
                 lift.setTargetPosition(LIFT_HIGH);
-                lift.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+                lift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
                 lift.setPower(0.5);
                 if (Math.abs(lift.getCurrentPosition()-LIFT_HIGH) < 10) {
                     buttonY = false;
                 }
             } else {
-                lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                lift.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
                 lift.setPower(0);
             }
 
@@ -191,15 +192,15 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
                 buttonA = false;
                 buttonB = false;
                 buttonY = false;
-                lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                lift.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
                 lift.setPower(-triggerLeft);
             } else if (triggerRight > 0.05) {
                 buttonA = false;
                 buttonB = false;
                 buttonY = false;
-                lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+                lift.setMode(DcMotorEx.RunMode.RUN_WITHOUT_ENCODER);
                 lift.setPower(triggerRight);
-            } else if (lift.getMode() == DcMotor.RunMode.RUN_WITHOUT_ENCODER) {
+            } else if (lift.getMode() == DcMotorEx.RunMode.RUN_WITHOUT_ENCODER) {
                 lift.setPower(0);
             }
 
