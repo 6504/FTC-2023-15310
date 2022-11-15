@@ -113,6 +113,10 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
         PIDFCoefficients pidfCoA=new PIDFCoefficients(NEW_P, NEW_I, NEW_D, NEW_F);
         //motorControllerEx.setPIDFCoefficients(motorIndex, DcMotorEX.RunMode.RUN_USING_ENCODER, PIDFCoA);
         
+        boolean buttonA; // button to move lift to low position
+        boolean buttonB; // button to move lift to medium position
+        boolean buttonY; // button to move lift to high position
+
         // run until the end of the match (driver presses STOP)
         while (opModeIsActive()) {
 
@@ -137,9 +141,7 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
 
             // variables for automatic lift control
             boolean buttonX = gamepad1.x; // button to cancel automatic lift movement
-            boolean buttonA; // button to move lift to low position
-            boolean buttonB; // button to move lift to medium position
-            boolean buttonY; // button to move lift to high position
+            
 
             if (gamepad1.a && !(buttonB || buttonX || buttonY)) {
                 buttonA = true;
