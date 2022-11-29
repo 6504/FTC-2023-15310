@@ -188,22 +188,26 @@ public class RobotAutoDriveByEncoder_Linear extends LinearOpMode {
             // onto the next step, use (isBusy() || isBusy()) in the loop test.
             while (opModeIsActive() &&
                    (runtime.seconds() < timeoutS) &&
-                   (leftDrive.isBusy() && rightDrive.isBusy())) {
+                   (frontLeft.isBusy() && backLeft.isBusy() && frontRight.isBusy() && backRight.isBusy())) { 
 
                 // Display it for the driver.
-                telemetry.addData("Running to",  " %7d :%7d", newLeftTarget,  newRightTarget);
-                telemetry.addData("Currently at",  " at %7d :%7d",
-                                            leftDrive.getCurrentPosition(), rightDrive.getCurrentPosition());
+                telemetry.addData("Running to",  " %7d :%7d :%7d :%7d", newFrontLeftTarget,  newBackLeftTarget, newFrontRightTarget, newFrontLeftTarget);
+                telemetry.addData("Currently at",  " at %7d :%7d :%7d :%7d",
+                                            frontLeft.getCurrentPosition(), backLeft.getCurrentPosition(), frontRight.getCurrentPosition(), frontLeft.getCurrentPosition());
                 telemetry.update();
             }
 
             // Stop all motion;
-            leftDrive.setPower(0);
-            rightDrive.setPower(0);
+            frontLeft.setPower(0);
+            backLeft.setPower(0);
+            frontRight.setPower(0);
+            backRight.setPower(0);
 
             // Turn off RUN_TO_POSITION
-            leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-            rightDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
             sleep(250);   // optional pause after each move.
         }
