@@ -74,8 +74,8 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
     private Servo claw = null;
 
     private final int LIFT_LOW = 0; //TODO: find actual values
-    private final int LIFT_MEDIUM = 1000; //TODO: find actual values
-    private final int LIFT_HIGH = 2000; //TODO: find actual values
+    private final int LIFT_MEDIUM = 2500; //TODO: find actual values
+    private final int LIFT_HIGH = 5500; //TODO: find actual values
 
     @Override
     public void runOpMode() {
@@ -90,8 +90,8 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
         frontLeft = hardwareMap.get(DcMotorEx.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotorEx.class, "frontRight");
 
-        lift = hardwareMap.get(DcMotorEx.class, "lift"); //TODO: set this up on phone
-        claw = hardwareMap.get(Servo.class, "claw"); //TODO: set this up on phone
+        lift = hardwareMap.get(DcMotorEx.class, "lift");
+        claw = hardwareMap.get(Servo.class, "claw");
 
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // Pushing the left stick forward MUST make robot go forward. So adjust these two lines based on your first test drive.
@@ -212,13 +212,18 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
             if (bumperLeft) {
                 claw.setPosition(0); //TODO: find actual values
             } else if (bumperRight) {
-                claw.setPosition(1); //TODO: find actual values
+                claw.setPosition(0.2); //TODO: find actual values
             }
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.addData("LeftMotors", "frontLeft (%.2f), backLeft (%.2f)", frontLeftPower, backLeftPower);
             telemetry.addData("RightMotors", "frontRight (%.2f), backRight (%.2f)", frontRightPower, backRightPower);
+            telemetry.addData("Buttons", "A: %b, B: %b, X: %b, Y: %b", buttonA, buttonB, buttonX, buttonY);
+            telemetry.addData("Lift", "Position: %d, Power: %.2f", lift.getCurrentPosition(), lift.getPower());
+            telemetry.addData("Claw", "Position: %.2f", claw.getPosition());
+            telemetry.addData("Bumpers Boolean", "Left: %b, Right: %b", bumperLeft, bumperRight);
+            telemetry.addData("Bumpers Controller", "Left: %b, Right: %b", gamepad1.left_bumper, gamepad1.right_bumper);
             telemetry.update();
         }
     }
