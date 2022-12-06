@@ -212,8 +212,9 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
             if (bumperLeft) {
                 claw.setPosition(0); //TODO: find actual values
             } else if (bumperRight) {
-                claw.setPosition(0.2); //TODO: find actual values
-            }
+                claw.setPosition(0.1); //TODO: find actual values
+            } else if (bumperLeft && bumperRight)
+                claw.setPosition(claw.getPosition());
 
             // Show the elapsed game time and wheel power.
             telemetry.addData("Status", "Run Time: " + runtime.toString());
