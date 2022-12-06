@@ -72,6 +72,9 @@ public class RightSideAuto extends LinearOpMode {
     private DcMotor backLeft = null;
     private DcMotor backRight = null;
 
+    private DcMotorEx lift = null;
+    private Servo claw = null;
+
     private ElapsedTime     runtime = new ElapsedTime();
 
     // Calculate the COUNTS_PER_INCH for your specific drive train.
@@ -97,6 +100,9 @@ public class RightSideAuto extends LinearOpMode {
         frontLeft = hardwareMap.get(DcMotor.class, "frontLeft");
         frontRight = hardwareMap.get(DcMotor.class, "frontRight");
 
+        lift = hardwareMap.get(DcMotorEx.class, "lift");
+        claw = hardwareMap.get(Servo.class, "claw");
+
         // To drive forward, most robots need the motor on one side to be reversed, because the axles point in opposite directions.
         // When run, this OpMode should start both motors driving forward. So adjust these two lines based on your first test drive.
         // Note: The settings here assume direct drive on left and right wheels.  Gear Reduction or 90 Deg drives may require direction flips
@@ -104,6 +110,9 @@ public class RightSideAuto extends LinearOpMode {
         backLeft.setDirection(DcMotor.Direction.REVERSE);
         frontRight.setDirection(DcMotor.Direction.FORWARD);
         backRight.setDirection(DcMotor.Direction.FORWARD);
+
+        lift.setDirection(DcMotor.Direction.FORWARD);
+        claw.setDirection(Servo.Direction.FORWARD);
 
         // leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         // rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
@@ -131,6 +140,9 @@ public class RightSideAuto extends LinearOpMode {
         // encoderDrive(DRIVE_SPEED,  48,  48, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
         // encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         // encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
+        claw.setPosition(0.2);
+        lift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        lift.setPower(0.5);
         encoderDrive(DRIVE_SPEED, 24, -24, -24, 24, 4.0);
 
         telemetry.addData("Path", "Complete");
