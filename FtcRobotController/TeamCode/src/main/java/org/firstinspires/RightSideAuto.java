@@ -27,7 +27,7 @@
  * OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package org.firstinspires.ftc.robotcontroller.external.samples;
+package org.firstinspires;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
@@ -64,7 +64,6 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  */
 
 @Autonomous(name="Robot: RightSideAuto", group="Robot")
-@Disabled
 public class RightSideAuto extends LinearOpMode {
 
     /* Declare OpMode members. */
@@ -141,9 +140,10 @@ public class RightSideAuto extends LinearOpMode {
         // encoderDrive(DRIVE_SPEED,  48,  48, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
         // encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         // encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
-        claw.setPosition(0.2);
-        lift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
+        claw.setPosition(0.4);
+        lift.setTargetPosition(1000);
         lift.setPower(0.5);
+        lift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         encoderDrive(DRIVE_SPEED, 24, -24, -24, 24, 4.0);
 
         telemetry.addData("Path", "Complete");

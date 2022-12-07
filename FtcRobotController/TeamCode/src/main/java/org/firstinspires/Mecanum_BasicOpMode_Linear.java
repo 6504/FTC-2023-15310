@@ -74,8 +74,8 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
     private Servo claw = null;
 
     private final int LIFT_LOW = 0; //TODO: find actual values
-    private final int LIFT_MEDIUM = 2500; //TODO: find actual values
-    private final int LIFT_HIGH = 5500; //TODO: find actual values
+    private final int LIFT_MEDIUM = 6000; //TODO: find actual values
+    private final int LIFT_HIGH = 7500; //TODO: find actual values
 
     @Override
     public void runOpMode() {
@@ -160,21 +160,21 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
             } else if (buttonA) {
                 lift.setTargetPosition(LIFT_LOW);
                 lift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                lift.setPower(0.5);
+                lift.setPower(0.75);
                 if (Math.abs(lift.getCurrentPosition()-LIFT_LOW) < 10) {
                     buttonA = false;
                 }
             } else if (buttonB) {
                 lift.setTargetPosition(LIFT_MEDIUM);
                 lift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                lift.setPower(0.5);
+                lift.setPower(0.75);
                 if (Math.abs(lift.getCurrentPosition()-LIFT_MEDIUM) < 10) {
                     buttonB = false;
                 }
             } else if (buttonY) {
                 lift.setTargetPosition(LIFT_HIGH);
                 lift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-                lift.setPower(0.5);
+                lift.setPower(0.75);
                 if (Math.abs(lift.getCurrentPosition()-LIFT_HIGH) < 10) {
                     buttonY = false;
                 }
@@ -210,21 +210,22 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
 
             // Logic for claw controls (A opens, B closes)
             if (bumperLeft) {
-                claw.setPosition(0); //TODO: find actual values
+                // close claw
+                claw.setPosition(0.4); //TODO: find actual values
             } else if (bumperRight) {
-                claw.setPosition(0.1); //TODO: find actual values
-            } else if (bumperLeft && bumperRight)
-                claw.setPosition(claw.getPosition());
+                // open claw
+                claw.setPosition(0.65); //TODO: find actual values
+            }
 
             // Show the elapsed game time and wheel power.
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
-            telemetry.addData("LeftMotors", "frontLeft (%.2f), backLeft (%.2f)", frontLeftPower, backLeftPower);
-            telemetry.addData("RightMotors", "frontRight (%.2f), backRight (%.2f)", frontRightPower, backRightPower);
-            telemetry.addData("Buttons", "A: %b, B: %b, X: %b, Y: %b", buttonA, buttonB, buttonX, buttonY);
-            telemetry.addData("Lift", "Position: %d, Power: %.2f", lift.getCurrentPosition(), lift.getPower());
-            telemetry.addData("Claw", "Position: %.2f", claw.getPosition());
-            telemetry.addData("Bumpers Boolean", "Left: %b, Right: %b", bumperLeft, bumperRight);
-            telemetry.addData("Bumpers Controller", "Left: %b, Right: %b", gamepad1.left_bumper, gamepad1.right_bumper);
+            // telemetry.addData("Status", "Run Time: " + runtime.toString());
+            // telemetry.addData("LeftMotors", "frontLeft (%.2f), backLeft (%.2f)", frontLeftPower, backLeftPower);
+            // telemetry.addData("RightMotors", "frontRight (%.2f), backRight (%.2f)", frontRightPower, backRightPower);
+            // telemetry.addData("Buttons", "A: %b, B: %b, X: %b, Y: %b", buttonA, buttonB, buttonX, buttonY);
+            // telemetry.addData("Lift", "Position: %d, Power: %.2f", lift.getCurrentPosition(), lift.getPower());
+            // telemetry.addData("Claw", "Position: %.2f", claw.getPosition());
+            // telemetry.addData("Bumpers Boolean", "Left: %b, Right: %b", bumperLeft, bumperRight);
+            // telemetry.addData("Bumpers Controller", "Left: %b, Right: %b", gamepad1.left_bumper, gamepad1.right_bumper);
             telemetry.update();
         }
     }
