@@ -63,8 +63,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Robot: RightSideAuto", group="Robot")
-public class RightSideAuto extends LinearOpMode {
+@Autonomous(name="Robot: LeftSideAuto", group="Robot")
+public class SimpleLeftSideAuto extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor frontLeft= null;
@@ -88,7 +88,7 @@ public class RightSideAuto extends LinearOpMode {
     static final double     WHEEL_DIAMETER_INCHES   = 4.0 ;     // For figuring circumference
     static final double     COUNTS_PER_INCH         = (COUNTS_PER_MOTOR_REV * DRIVE_GEAR_REDUCTION) /
                                                       (WHEEL_DIAMETER_INCHES * 3.1415);
-    static final double     DRIVE_SPEED             = 0.6;
+    static final double     DRIVE_SPEED             = 1;
     static final double     TURN_SPEED              = 0.5;
 
     @Override
@@ -140,11 +140,12 @@ public class RightSideAuto extends LinearOpMode {
         // encoderDrive(DRIVE_SPEED,  48,  48, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
         // encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         // encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
-        claw.setPosition(0.4);
+        claw.setPosition(0.35);
         lift.setTargetPosition(1000);
         lift.setPower(0.5);
         lift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        encoderDrive(DRIVE_SPEED, 24, -24, -24, 24, 4.0);
+        sleep(1000);
+        encoderDrive(DRIVE_SPEED, -24, 24, 24, -24, 4.0);
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
