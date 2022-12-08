@@ -173,9 +173,9 @@ public class RightSideAuto extends LinearOpMode {
 
             // Determine new target position, and pass to motor controller
             newFrontLeftTarget = frontLeft.getCurrentPosition() + (int)(frontLeftInches * COUNTS_PER_INCH);
-            newBackLeftTarget = backLeft.getCurrentPosition() + (int)(backRightInches * COUNTS_PER_INCH);
+            newBackLeftTarget = backLeft.getCurrentPosition() + (int)(backLeftInches * COUNTS_PER_INCH);
             newFrontRightTarget = frontRight.getCurrentPosition() + (int)(frontRightInches * COUNTS_PER_INCH);
-            newBackRightTarget = backRight.getCurrentPosition() + (int)(frontRightInches * COUNTS_PER_INCH);
+            newBackRightTarget = backRight.getCurrentPosition() + (int)(backRightInches * COUNTS_PER_INCH);
             frontLeft.setTargetPosition(newFrontLeftTarget);
             backLeft.setTargetPosition(newBackLeftTarget);
             frontRight.setTargetPosition(newFrontRightTarget);
