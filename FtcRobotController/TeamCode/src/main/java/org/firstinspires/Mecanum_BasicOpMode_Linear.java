@@ -73,9 +73,9 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
     private DcMotorEx lift = null;
     private Servo claw = null;
 
-    private final int LIFT_LOW = 0; //TODO: find actual values
-    private final int LIFT_MEDIUM = 6000; //TODO: find actual values
-    private final int LIFT_HIGH = 7500; //TODO: find actual values
+    private final int LIFT_LOW = 0; 
+    private final int LIFT_MEDIUM = 6000; 
+    private final int LIFT_HIGH = 7500; 
 
     @Override
     public void runOpMode() {

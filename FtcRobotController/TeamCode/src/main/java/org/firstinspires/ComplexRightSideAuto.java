@@ -77,6 +77,15 @@ public class SimpleRightSideAuto extends LinearOpMode {
 
     private ElapsedTime     runtime = new ElapsedTime();
 
+    private final int individualConeHeight = 500; //TODO: find actual values 
+    private int coneStackHeight = individualConeHeight * 5; //TODO: find actual values
+    private int remainingCones = 5; 
+
+    private final int LIFT_LOW = 0; 
+    private final int LIFT_MEDIUM = 6000; 
+    private final int LIFT_HIGH = 7500; 
+
+
     // Calculate the COUNTS_PER_INCH for your specific drive train.
     // Go to your motor vendor website to determine your motor's COUNTS_PER_MOTOR_REV
     // For external drive gearing, set DRIVE_GEAR_REDUCTION as needed.
@@ -91,6 +100,9 @@ public class SimpleRightSideAuto extends LinearOpMode {
     static final double     DRIVE_SPEED             = 1;
     static final double     TURN_SPEED              = 0.5;
 
+    static final double     CLAW_CLOSE_POSITION     = 0.35;
+    static final double     CLAW_OPEN_POSITION      = 0.65;
+    
     @Override
     public void runOpMode() {
 
@@ -140,12 +152,38 @@ public class SimpleRightSideAuto extends LinearOpMode {
         // encoderDrive(DRIVE_SPEED,  48,  48, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
         // encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         // encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
-        claw.setPosition(0.4);
+        claw.setPosition(CLAW_CLOSE_POSITION);
         lift.setTargetPosition(1000);
-        lift.setPower(0.5);
+        lift.setPower(1);
         lift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         sleep(1000);
-        encoderDrive(DRIVE_SPEED, 24, -24, -24, 24, 4.0);
+        encoderDrive(DRIVE_SPEED, -20, 20, 20, -20, 4.0); //strafe left by 20 inches
+
+        lift.setTargetPosition(7500);
+        encoderDrive(DRIVE_SPEED, 60, 60, 60, 60, 12.0); //move straight 60 inches
+
+        encoderDrive(DRIVE_SPEED, 12, -12, -12, 12, 4.0) //strafe right 12 inches
+        
+        lift.setTargetPosition(7000);
+        claw.setPosition(CLAW_OPEN_POSITION);
+        
+        encoderDrive(DRIVE_SPEED, -8, -8, -8, -8, 4.0) //move backwards 8 inches
+        lift.setTargetPosition(coneStackHeight - (individualConeHeight * remainingCones));
+        remainingCones--;
+
+        encoderDrive(DRIVE_SPEED, 12, 12, -12, -12, 4.0) //rotate right 90 degrees
+        encoderDrive(DRIVE_SPEED, 30, 30, 30, 30, 12.0); //move straight 30 inches
+
+        claw.setPosition(CLAW_CLOSE_POSITION);
+        lift.setTargetPosition(LIFT_HIGH);
+
+        encoderDrive(DRIVE_SPEED, -30, -30, -30, -30, 12.0); //move backwards 30 inches
+        encoderDrive(DRIVE_SPEED, -12, -12, 12, 12, 4.0) //rotate left 90 degrees
+        
+        encoderDrive(DRIVE_SPEED, 8, 8, 8, 8, 4.0) //move straight 8 inches
+        lift.setTargetPosition(7000);
+        claw.setPosition(CLAW_OPEN_POSITION);
+
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
