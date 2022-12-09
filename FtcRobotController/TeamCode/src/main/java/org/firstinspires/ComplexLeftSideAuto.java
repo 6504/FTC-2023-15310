@@ -63,8 +63,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Robot: ComplexRightSideAuto", group="Robot")
-public class ComplexRightSideAuto extends LinearOpMode {
+@Autonomous(name="Robot: ComplexLeftSideAuto", group="Robot")
+public class ComplexLeftSideAuto extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor frontLeft= null;
@@ -157,12 +157,12 @@ public class ComplexRightSideAuto extends LinearOpMode {
         lift.setPower(1);
         lift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         sleep(1000);
-        encoderDrive(DRIVE_SPEED, -20, 20, 20, -20, 4.0); //strafe left by 20 inches
+        encoderDrive(DRIVE_SPEED, 20, -20, -20, 20, 4.0); //strafe right by 20 inches
 
         lift.setTargetPosition(7500);
         encoderDrive(DRIVE_SPEED, 60, 60, 60, 60, 12.0); //move straight 60 inches
 
-        encoderDrive(DRIVE_SPEED, 12, -12, -12, 12, 4.0); //strafe right 12 inches
+        encoderDrive(DRIVE_SPEED, -12, 12, 12, -12, 4.0); //strafe left 12 inches
         
         sleep(1000);
         lift.setTargetPosition(7000);
@@ -174,7 +174,7 @@ public class ComplexRightSideAuto extends LinearOpMode {
         lift.setTargetPosition(coneStackHeight - (individualConeHeight * remainingCones));
         remainingCones--;
 
-        encoderDrive(DRIVE_SPEED, 24, 24, -24, -24, 4.0); //rotate right 90 degrees
+        encoderDrive(DRIVE_SPEED, -24, -24, 24, 24, 4.0); //rotate left 90 degrees
         sleep(500);
         encoderDrive(DRIVE_SPEED, 30, 30, 30, 30, 12.0); //move straight 30 inches
 
@@ -185,7 +185,7 @@ public class ComplexRightSideAuto extends LinearOpMode {
         sleep(1000);
 
         encoderDrive(DRIVE_SPEED, -30, -30, -30, -30, 12.0); //move backwards 30 inches
-        encoderDrive(DRIVE_SPEED, -24, -24, 24, 24, 4.0); //rotate left 90 degrees
+        encoderDrive(DRIVE_SPEED, 24, 24, -24, -24, 4.0); //rotate right 90 degrees
         
         encoderDrive(DRIVE_SPEED, 8, 8, 8, 8, 4.0); //move straight 8 inches
         sleep(1000);
