@@ -147,7 +147,7 @@ public class ComplexRightSideAuto extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
-        sleep(1000);
+        sleep(250);
 
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
@@ -165,10 +165,10 @@ public class ComplexRightSideAuto extends LinearOpMode {
         lift.setTargetPosition(7500);
         encoderDrive(DRIVE_SPEED, 57, 57, 57, 57, 12.0); //move straight 57 inches
 
-        encoderDrive(DRIVE_SPEED, 12, -12, -12, 12, 4.0); //strafe right 12 inches
+        encoderDrive(DRIVE_SPEED, 14, -14, -14, 14, 4.0); //strafe right 14 inches
         
         sleep(1000);
-        lift.setTargetPosition(7000);
+        lift.setTargetPosition(6500);
         sleep(500);
         claw.setPosition(CLAW_OPEN_POSITION);
         sleep(500);
