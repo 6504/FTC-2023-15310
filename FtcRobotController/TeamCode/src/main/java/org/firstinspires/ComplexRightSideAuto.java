@@ -165,7 +165,7 @@ public class ComplexRightSideAuto extends LinearOpMode {
         lift.setTargetPosition(7500);
         encoderDrive(DRIVE_SPEED, 57, 57, 57, 57, 12.0); //move straight 57 inches
 
-        encoderDrive(DRIVE_SPEED, 14, -14, -14, 14, 4.0); //strafe right 14 inches
+        encoderDrive(DRIVE_SPEED, 12, -12, -12, 12, 4.0); //strafe right 14 inches
         
         sleep(1000);
         lift.setTargetPosition(6500);
@@ -177,7 +177,7 @@ public class ComplexRightSideAuto extends LinearOpMode {
         lift.setTargetPosition(coneStackHeight - (individualConeHeight * remainingCones));
         remainingCones--;
 
-        encoderDrive(DRIVE_SPEED, 19, 19, -19, -19, 4.0); //rotate right 90 degrees
+        encoderDrive(DRIVE_SPEED, 20, 20, -20, -20, 4.0); //rotate right 90 degrees
         sleep(500);
         encoderDrive(DRIVE_SPEED, 30, 30, 30, 30, 12.0); //move straight 30 inches
 
@@ -188,7 +188,7 @@ public class ComplexRightSideAuto extends LinearOpMode {
         sleep(1000);
 
         encoderDrive(DRIVE_SPEED, -30, -30, -30, -30, 12.0); //move backwards 30 inches
-        encoderDrive(DRIVE_SPEED, -19, -19, 19, 19, 4.0); //rotate left 90 degrees
+        encoderDrive(DRIVE_SPEED, -20, -20, 20, 20, 4.0); //rotate left 90 degrees
         
         encoderDrive(DRIVE_SPEED, 8, 8, 8, 8, 4.0); //move straight 8 inches
         sleep(1000);
