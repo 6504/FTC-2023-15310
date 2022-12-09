@@ -162,25 +162,25 @@ public class SimpleRightSideAuto extends LinearOpMode {
         lift.setTargetPosition(7500);
         encoderDrive(DRIVE_SPEED, 60, 60, 60, 60, 12.0); //move straight 60 inches
 
-        encoderDrive(DRIVE_SPEED, 12, -12, -12, 12, 4.0) //strafe right 12 inches
+        encoderDrive(DRIVE_SPEED, 12, -12, -12, 12, 4.0); //strafe right 12 inches
         
         lift.setTargetPosition(7000);
         claw.setPosition(CLAW_OPEN_POSITION);
         
-        encoderDrive(DRIVE_SPEED, -8, -8, -8, -8, 4.0) //move backwards 8 inches
+        encoderDrive(DRIVE_SPEED, -8, -8, -8, -8, 4.0); //move backwards 8 inches
         lift.setTargetPosition(coneStackHeight - (individualConeHeight * remainingCones));
         remainingCones--;
 
-        encoderDrive(DRIVE_SPEED, 12, 12, -12, -12, 4.0) //rotate right 90 degrees
+        encoderDrive(DRIVE_SPEED, 12, 12, -12, -12, 4.0); //rotate right 90 degrees
         encoderDrive(DRIVE_SPEED, 30, 30, 30, 30, 12.0); //move straight 30 inches
 
         claw.setPosition(CLAW_CLOSE_POSITION);
         lift.setTargetPosition(LIFT_HIGH);
 
         encoderDrive(DRIVE_SPEED, -30, -30, -30, -30, 12.0); //move backwards 30 inches
-        encoderDrive(DRIVE_SPEED, -12, -12, 12, 12, 4.0) //rotate left 90 degrees
+        encoderDrive(DRIVE_SPEED, -12, -12, 12, 12, 4.0); //rotate left 90 degrees
         
-        encoderDrive(DRIVE_SPEED, 8, 8, 8, 8, 4.0) //move straight 8 inches
+        encoderDrive(DRIVE_SPEED, 8, 8, 8, 8, 4.0); //move straight 8 inches
         lift.setTargetPosition(7000);
         claw.setPosition(CLAW_OPEN_POSITION);
 
