@@ -175,7 +175,7 @@ public class ComplexRightSideAuto extends LinearOpMode {
         lift.setTargetPosition(coneStackHeight - (individualConeHeight * remainingCones));
         remainingCones--;
 
-        encoderDrive(DRIVE_SPEED, 24, 24, -24, -24, 4.0); //rotate right 90 degrees
+        encoderDrive(DRIVE_SPEED, 22, 22, -22, -22, 4.0); //rotate right 90 degrees
         sleep(500);
         encoderDrive(DRIVE_SPEED, 30, 30, 30, 30, 12.0); //move straight 30 inches
 
