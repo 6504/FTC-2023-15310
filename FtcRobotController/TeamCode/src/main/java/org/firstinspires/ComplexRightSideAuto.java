@@ -161,7 +161,7 @@ public class ComplexRightSideAuto extends LinearOpMode {
         encoderDrive(DRIVE_SPEED, -20, 20, 20, -20, 4.0); //strafe left by 20 inches
 
         lift.setTargetPosition(7500);
-        encoderDrive(DRIVE_SPEED, 58, 58, 58, 58, 12.0); //move straight 58 inches
+        encoderDrive(DRIVE_SPEED, 55, 55, 55, 55, 12.0); //move straight 54 inches
 
         encoderDrive(DRIVE_SPEED, 12, -12, -12, 12, 4.0); //strafe right 12 inches
         
