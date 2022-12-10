@@ -147,6 +147,11 @@ public class ComplexRightSideAuto extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
         sleep(250);
 
         // Step through each leg of the path,
@@ -168,7 +173,7 @@ public class ComplexRightSideAuto extends LinearOpMode {
         encoderDrive(DRIVE_SPEED, 14, -14, -14, 14, 4.0); //strafe right 14 inches
         
         sleep(1000);
-        lift.setTargetPosition(6500);
+        lift.setTargetPosition(6250);
         sleep(500);
         claw.setPosition(CLAW_OPEN_POSITION);
         sleep(500);
@@ -192,7 +197,7 @@ public class ComplexRightSideAuto extends LinearOpMode {
         
         encoderDrive(DRIVE_SPEED, 8, 8, 8, 8, 4.0); //move straight 8 inches
         sleep(1000);
-        lift.setTargetPosition(7000);
+        lift.setTargetPosition(6250);
         sleep(500);
         claw.setPosition(CLAW_OPEN_POSITION);
 
