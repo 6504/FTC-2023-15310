@@ -147,25 +147,33 @@ public class ComplexLeftSideAuto extends LinearOpMode {
         // Wait for the game to start (driver presses PLAY)
         waitForStart();
 
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        sleep(250);
+
         // Step through each leg of the path,
         // Note: Reverse movement is obtained by setting a negative distance (not speed)
         // encoderDrive(DRIVE_SPEED,  48,  48, 5.0);  // S1: Forward 47 Inches with 5 Sec timeout
         // encoderDrive(TURN_SPEED,   12, -12, 4.0);  // S2: Turn Right 12 Inches with 4 Sec timeout
         // encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
         claw.setPosition(CLAW_CLOSE_POSITION);
+        sleep(1000);
         lift.setTargetPosition(1000);
         lift.setPower(1);
         lift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         sleep(1000);
         encoderDrive(DRIVE_SPEED, 20, -20, -20, 20, 4.0); //strafe right by 20 inches
 
-        lift.setTargetPosition(7500);
-        encoderDrive(DRIVE_SPEED, 60, 60, 60, 60, 12.0); //move straight 60 inches
+        lift.setTargetPosition(LIFT_HIGH);
+        encoderDrive(DRIVE_SPEED, 56, 56, 56, 56, 12.0); //move straight 56 inches
 
-        encoderDrive(DRIVE_SPEED, -12, 12, 12, -12, 4.0); //strafe left 12 inches
+        encoderDrive(DRIVE_SPEED, -14, 14, 14, -14, 4.0); //strafe left 14 inches
         
         sleep(1000);
-        lift.setTargetPosition(7000);
+        lift.setTargetPosition(6250);
         sleep(500);
         claw.setPosition(CLAW_OPEN_POSITION);
         sleep(500);
@@ -174,9 +182,9 @@ public class ComplexLeftSideAuto extends LinearOpMode {
         lift.setTargetPosition(coneStackHeight - (individualConeHeight * remainingCones));
         remainingCones--;
 
-        encoderDrive(DRIVE_SPEED, -24, -24, 24, 24, 4.0); //rotate left 90 degrees
+        encoderDrive(DRIVE_SPEED, -20, -20, 20, 20, 4.0); //rotate left 90 degrees
         sleep(500);
-        encoderDrive(DRIVE_SPEED, 30, 30, 30, 30, 12.0); //move straight 30 inches
+        encoderDrive(DRIVE_SPEED, 40, 40, 40, 40, 12.0); //move straight 40 inches
 
         sleep(500);
         claw.setPosition(CLAW_CLOSE_POSITION);
@@ -184,12 +192,12 @@ public class ComplexLeftSideAuto extends LinearOpMode {
         lift.setTargetPosition(LIFT_HIGH);
         sleep(1000);
 
-        encoderDrive(DRIVE_SPEED, -30, -30, -30, -30, 12.0); //move backwards 30 inches
-        encoderDrive(DRIVE_SPEED, 24, 24, -24, -24, 4.0); //rotate right 90 degrees
+        encoderDrive(DRIVE_SPEED, -40, -40, -40, -40, 12.0); //move backwards 40 inches
+        encoderDrive(DRIVE_SPEED, 20, 20, -20, -20, 4.0); //rotate right 90 degrees
         
         encoderDrive(DRIVE_SPEED, 8, 8, 8, 8, 4.0); //move straight 8 inches
         sleep(1000);
-        lift.setTargetPosition(7000);
+        lift.setTargetPosition(6250);
         sleep(500);
         claw.setPosition(CLAW_OPEN_POSITION);
 

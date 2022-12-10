@@ -63,8 +63,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Robot: SimpleRightSideAuto", group="Robot")
-public class SimpleRightSideAuto extends LinearOpMode {
+@Autonomous(name="Robot: StandardLeftSideAuto", group="Robot")
+public class StandardLeftSideAuto extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor frontLeft= null;
@@ -77,9 +77,14 @@ public class SimpleRightSideAuto extends LinearOpMode {
 
     private ElapsedTime     runtime = new ElapsedTime();
 
+    private final int individualConeHeight = 500; //TODO: find actual values 
+    private int coneStackHeight = individualConeHeight * 5; //TODO: find actual values
+    private int remainingCones = 5; 
+
     private final int LIFT_LOW = 0; 
     private final int LIFT_MEDIUM = 6000; 
     private final int LIFT_HIGH = 7500; 
+
 
     // Calculate the COUNTS_PER_INCH for your specific drive train.
     // Go to your motor vendor website to determine your motor's COUNTS_PER_MOTOR_REV
@@ -97,7 +102,7 @@ public class SimpleRightSideAuto extends LinearOpMode {
 
     static final double     CLAW_CLOSE_POSITION     = 0.35;
     static final double     CLAW_OPEN_POSITION      = 0.65;
-
+    
     @Override
     public void runOpMode() {
 
@@ -160,8 +165,13 @@ public class SimpleRightSideAuto extends LinearOpMode {
         lift.setPower(1);
         lift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         sleep(1000);
-        encoderDrive(DRIVE_SPEED, 24, -24, -24, 24, 4.0);
+        encoderDrive(DRIVE_SPEED, 20, -20, -20, 20, 4.0); //strafe right by 20 inches
 
+        lift.setTargetPosition(LIFT_HIGH);
+        encoderDrive(DRIVE_SPEED, 56, 56, 56, 56, 12.0); //move straight 56 inches
+
+        encoderDrive(DRIVE_SPEED, -14, 14, 14, -14, 4.0); //strafe left 14 inches
+        
         telemetry.addData("Path", "Complete");
         telemetry.update();
         sleep(1000);  // pause to display final telemetry message.
