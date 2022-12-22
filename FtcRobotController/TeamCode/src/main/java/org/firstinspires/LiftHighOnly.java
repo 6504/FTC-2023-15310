@@ -63,8 +63,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Robot: SimpleLeftSideAuto", group="Robot")
-public class SimpleLeftSideAuto extends LinearOpMode {
+@Autonomous(name="Robot: LiftHighOnly", group="Robot")
+public class LiftHighOnly extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor frontLeft= null;
@@ -76,6 +76,15 @@ public class SimpleLeftSideAuto extends LinearOpMode {
     private Servo claw = null;
 
     private ElapsedTime     runtime = new ElapsedTime();
+
+    private final int individualConeHeight = 500; //TODO: find actual values 
+    private int coneStackHeight = individualConeHeight * 5; //TODO: find actual values
+    private int remainingCones = 5; 
+
+    private final int LIFT_LOW = 0; 
+    private final int LIFT_MEDIUM = 6000; 
+    private final int LIFT_HIGH = 6800; 
+
 
     // Calculate the COUNTS_PER_INCH for your specific drive train.
     // Go to your motor vendor website to determine your motor's COUNTS_PER_MOTOR_REV
@@ -90,9 +99,10 @@ public class SimpleLeftSideAuto extends LinearOpMode {
                                                       (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 1;
     static final double     TURN_SPEED              = 0.5;
+
     static final double     CLAW_CLOSE_POSITION     = 0.35;
-
-
+    static final double     CLAW_OPEN_POSITION      = 0.65;
+    
     @Override
     public void runOpMode() {
 
@@ -116,7 +126,7 @@ public class SimpleLeftSideAuto extends LinearOpMode {
         lift.setDirection(DcMotor.Direction.FORWARD);
         claw.setDirection(Servo.Direction.FORWARD);
 
-        // leftDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         // rightDrive.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
 
         // leftDrive.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
@@ -127,10 +137,6 @@ public class SimpleLeftSideAuto extends LinearOpMode {
         //                   leftDrive.getCurrentPosition(),
         //                   rightDrive.getCurrentPosition());
 
-        telemetry.addData("Front Left Position: %7d", frontLeft.getCurrentPosition());
-        telemetry.addData("Back Left Position: %7d", backLeft.getCurrentPosition());
-        telemetry.addData("Front Right Position: %7d", frontRight.getCurrentPosition());
-        telemetry.addData("Back Right Position: %7d", backRight.getCurrentPosition());
 
         telemetry.update();
 
@@ -151,15 +157,20 @@ public class SimpleLeftSideAuto extends LinearOpMode {
         // encoderDrive(DRIVE_SPEED, -24, -24, 4.0);  // S3: Reverse 24 Inches with 4 Sec timeout
         claw.setPosition(CLAW_CLOSE_POSITION);
         sleep(1000);
-        lift.setTargetPosition(1000);
+        lift.setTargetPosition(6800);
         lift.setPower(1);
         lift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
-        sleep(1000);
-        encoderDrive(DRIVE_SPEED, -24, 24, 24, -24, 4.0);
 
+        while (lift.isBusy()){
+            telemetry.addData("Lift Position: %d", lift.getCurrentPosition());
+            telemetry.update();
+            sleep(10);
+        }
+
+        telemetry.addData("Lift Position: %d", lift.getCurrentPosition());
         telemetry.addData("Path", "Complete");
         telemetry.update();
-        sleep(1000);  // pause to display final telemetry message.
+        sleep(10000);  // pause to display final telemetry message.
     }
 
     /*

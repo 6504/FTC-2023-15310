@@ -165,12 +165,12 @@ public class ComplexLeftSideAuto extends LinearOpMode {
         lift.setPower(1);
         lift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         sleep(1000);
-        encoderDrive(DRIVE_SPEED, 20, -20, -20, 20, 4.0); //strafe right by 20 inches
+        encoderDrive(DRIVE_SPEED, 24, -24, -24, 24, 4.0); //strafe right by 20 inches
 
         lift.setTargetPosition(LIFT_HIGH);
         encoderDrive(DRIVE_SPEED, 56, 56, 56, 56, 12.0); //move straight 56 inches
 
-        encoderDrive(DRIVE_SPEED, -14, 14, 14, -14, 4.0); //strafe left 14 inches
+        encoderDrive(DRIVE_SPEED, -16, 16, 16, -16, 4.0); //strafe left 14 inches
         
         sleep(1000);
         lift.setTargetPosition(6250);

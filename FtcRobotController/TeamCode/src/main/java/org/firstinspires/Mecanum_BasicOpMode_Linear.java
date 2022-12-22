@@ -222,7 +222,7 @@ public class Mecanum_BasicOpMode_Linear extends LinearOpMode {
             // telemetry.addData("LeftMotors", "frontLeft (%.2f), backLeft (%.2f)", frontLeftPower, backLeftPower);
             // telemetry.addData("RightMotors", "frontRight (%.2f), backRight (%.2f)", frontRightPower, backRightPower);
             // telemetry.addData("Buttons", "A: %b, B: %b, X: %b, Y: %b", buttonA, buttonB, buttonX, buttonY);
-            // telemetry.addData("Lift", "Position: %d, Power: %.2f", lift.getCurrentPosition(), lift.getPower());
+            telemetry.addData("Lift", "Position: %d, Power: %.2f", lift.getCurrentPosition(), lift.getPower());
             // telemetry.addData("Claw", "Position: %.2f", claw.getPosition());
             // telemetry.addData("Bumpers Boolean", "Left: %b, Right: %b", bumperLeft, bumperRight);
             // telemetry.addData("Bumpers Controller", "Left: %b, Right: %b", gamepad1.left_bumper, gamepad1.right_bumper);

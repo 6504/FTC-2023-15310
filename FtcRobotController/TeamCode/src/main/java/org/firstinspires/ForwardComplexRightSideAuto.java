@@ -63,8 +63,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
  * Remove or comment out the @Disabled line to add this opmode to the Driver Station OpMode list
  */
 
-@Autonomous(name="Robot: SimpleLeftSideAuto", group="Robot")
-public class SimpleLeftSideAuto extends LinearOpMode {
+@Autonomous(name="Robot: ForwardComplexRightSideAuto", group="Robot")
+public class ForwardComplexRightSideAuto extends LinearOpMode {
 
     /* Declare OpMode members. */
     private DcMotor frontLeft= null;
@@ -76,6 +76,15 @@ public class SimpleLeftSideAuto extends LinearOpMode {
     private Servo claw = null;
 
     private ElapsedTime     runtime = new ElapsedTime();
+
+    private final int individualConeHeight = 500; //TODO: find actual values 
+    private int coneStackHeight = individualConeHeight * 5; //TODO: find actual values
+    private int remainingCones = 5; 
+
+    private final int LIFT_LOW = 0; 
+    private final int LIFT_MEDIUM = 6000; 
+    private final int LIFT_HIGH = 7500; 
+
 
     // Calculate the COUNTS_PER_INCH for your specific drive train.
     // Go to your motor vendor website to determine your motor's COUNTS_PER_MOTOR_REV
@@ -90,9 +99,10 @@ public class SimpleLeftSideAuto extends LinearOpMode {
                                                       (WHEEL_DIAMETER_INCHES * 3.1415);
     static final double     DRIVE_SPEED             = 1;
     static final double     TURN_SPEED              = 0.5;
+
     static final double     CLAW_CLOSE_POSITION     = 0.35;
-
-
+    static final double     CLAW_OPEN_POSITION      = 0.65;
+    
     @Override
     public void runOpMode() {
 
@@ -141,6 +151,7 @@ public class SimpleLeftSideAuto extends LinearOpMode {
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        lift.setMode(DcMotorEx.RunMode.STOP_AND_RESET_ENCODER);
 
         sleep(250);
 
@@ -155,7 +166,20 @@ public class SimpleLeftSideAuto extends LinearOpMode {
         lift.setPower(1);
         lift.setMode(DcMotorEx.RunMode.RUN_TO_POSITION);
         sleep(1000);
-        encoderDrive(DRIVE_SPEED, -24, 24, 24, -24, 4.0);
+
+        lift.setTargetPosition(LIFT_HIGH);
+        encoderDrive(DRIVE_SPEED, 57, 57, 57, 57, 12.0); //move straight 56 inches
+
+        encoderDrive(DRIVE_SPEED, -14, 14, 14, -14, 4.0); //strafe left 14 inches
+        
+        sleep(1000);
+        lift.setTargetPosition(6250);
+        sleep(500);
+        claw.setPosition(CLAW_OPEN_POSITION);
+        sleep(500);
+        
+        encoderDrive(DRIVE_SPEED, -8, -8, -8, -8, 4.0); //move backwards 8 inches
+        lift.setTargetPosition(coneStackHeight - (individualConeHeight * remainingCones));
 
         telemetry.addData("Path", "Complete");
         telemetry.update();
